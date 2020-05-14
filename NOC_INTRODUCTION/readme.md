@@ -395,3 +395,102 @@ The way to use Perlin Noise in Processing is like this `float x = noise(t)`. The
 ![](https://i.imgur.com/5FIJiqw.png)
 
 See the graph plotted in the drawing? Daniel describes the `time` as the steps that are being made. We can see 3 very big steps and at the start of the plot ~5 small ones. As you can maybe see, the 3 big steps give very different results, where the smaller steps give results that are closer to each other. 
+
+##### Exercise
+I struggled pretty hard trying to make a random walker with Perlin Noise. This were my results:
+```java
+Walker w;
+float t = 0;
+
+void setup() {
+  size(800, 600);
+  w = new Walker();
+  background(255);
+}
+
+void draw() {
+  w.step();
+  w.render();
+}
+
+class Walker {
+  float x,y;
+  
+  Walker () {
+    x = width/2;
+    y = height/2;
+  }
+  
+  void render() {
+    stroke(0);
+    point(x,y);
+  }
+  
+   void step() {
+    t = t + 0.1;
+    
+    float n = noise(-t);
+    float z = noise(-t);
+    
+    x = map(n,0,1,0,width);
+    y = map(z,0,1,0,height);
+    print(x + ", ");
+  }
+}
+```
+![](https://i.imgur.com/lZWKYBJ.png)
+
+###### This is how it should work
+```java
+Walker w;
+
+void setup() {
+  size(640,360);
+  w = new Walker();
+  background(0);
+}
+
+void draw() {
+  // Run the walker object
+  w.step();
+  w.render();
+}
+
+// A random walker object!
+
+class Walker {
+  float x, y;
+  float tx, ty;
+
+  float prevX, prevY;
+
+  Walker() {
+    tx = 0;
+    ty = 10000;
+    x = map(noise(tx), 0, 1, 0, width);
+    y = map(noise(ty), 0, 1, 0, height);
+  }
+
+  void render() {
+    stroke(255);
+    line(prevX, prevY, x, y);
+  }
+
+  // Randomly move according to floating point values
+  void step() {
+
+    prevX = x;
+    prevY = y;
+
+    x = map(noise(tx), 0, 1, 0, width);
+    y = map(noise(ty), 0, 1, 0, height);
+
+    tx += 0.01;
+    ty += 0.01;
+
+  }
+}
+
+```
+![](https://i.imgur.com/Ozpm5oJ.png)
+

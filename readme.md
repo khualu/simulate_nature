@@ -9,8 +9,8 @@ There will be folders for each series of video in the main series that I get to 
 | Date  | n Time (in minutes)  | Activity  |
 |---|---|---|
 | 11/5/2020 | 60 minutes | Introduction: Random Walker excersice  |
-|  12/05/2020 | 90 minutes | Introduction: Probability Basics & Gaussian distributions  |
-|   |   |   |
+| 12/05/2020 | 90 minutes | Introduction: Probability Basics & Gaussian distributions  |
+| 14/05/202  | 150 minutes  | Introduction: Custom Distribution & Perlin Noise  |
 |   |   |   |
 |   |   |   |
 |   |   |   |
