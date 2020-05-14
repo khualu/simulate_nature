@@ -243,6 +243,36 @@ h = h + mean;
 #### Exercise
 I tried to remake the last example of code Daniel gave. This gives an illustration that shows standard devation in a proper way. In the next pictures the mean is the same, being `μ = 500`. The only difference is the standard deviation.
 
+```java
+import java.util.Random;
+
+Random generator;
+
+void setup() {
+  size(1000, 100);
+  generator = new Random();
+  background(255);
+  
+  
+}
+
+void draw() {
+  
+  
+  // casting syntax for Java, this is float(generator.nextGaussian())
+  float x = (float) generator.nextGaussian();
+  float stddev = 50;
+  float mean = width/2;
+  
+  x = x * stddev;
+  x = x + mean;
+  
+  fill(0, 10);
+  noStroke();
+  ellipse(x, height/2, 10, 10);
+}
+```
+
 `σ = 50` 
 ![Distribution with standard deviation of 50](https://i.imgur.com/JdfJwgp.png)
 
@@ -254,3 +284,114 @@ I tried to remake the last example of code Daniel gave. This gives an illustrati
 `σ = 150` 
 ![Distribution with standard deviation of 150](https://i.imgur.com/BgU6Q7A.png)
 
+### Custom distribution
+So, what if we want to create a custom distribution. For example, what if a distribution looks a little like this? 
+
+![](https://s3-us-west-2.amazonaws.com/courses-images/wp-content/uploads/sites/2043/2017/07/01024722/postive-1024x813.png)
+
+How can we create an approach in code to simulate this kind of distribution. Daniel describes a method for this. It is fairly simple, but it took me some time to get my head around it. 
+
+```java
+float r1 = random(0,100);
+float r2 = random(0,100);
+
+if (r2 < r1) {
+  // do something
+} else {
+  // pick another r1
+}
+```
+
+##### Exercises
+So, with this little example. I'm going to do some experimenting now and see what kind of results I can show you from this. 
+
+###### Experiment #1
+```java
+void setup() {
+  size (500,500);
+  background(255);
+}
+
+void draw() {
+  float r1 = random(0,500);
+  float r2 = random(0,500);
+  
+  if (r2 < r1) {
+    fill(1,1);
+    ellipse(r1, r1, 5, 5);
+  } else {
+    
+    return;
+  }
+}
+```
+![](https://i.imgur.com/Bo3p3Ev.png)
+
+Okey, so while doing this I realized that as long as you give the simulation enough time, eventually the whole line will be blacked out. Because the probability of every number `[0, 100]` will grow. 
+
+So I decided to make a `for loop`  to make sure the test runs a 100 times and then stops. This gave me a huge realization about the nature of `if (r2 < r1)`. From the results shown beneath the code, I wondered why there was only one result visible in the graph. But from the print results, I saw that the loop had definitely run 100 times. So what happened. Apparently only 1 time in those 100 tries the results complied to `r2 < r1`. So, I have to move the for loop for when the results of `r2 < r1` are complied. 
+
+```java
+void draw() {
+  float r1 = random(0,500);
+  float r2 = random(0,500);
+  
+  for (int i = 0; i < 101; i = i + 1) {
+   if (i < 100) {
+     print(i + ", ");
+     if (r2 < r1) {
+      fill(1,1);
+      ellipse(r1, r1, 5, 5);
+      } else {
+        return;
+      }
+   } else {
+      print("100 calculations done");
+      noLoop();
+   }
+  }
+}
+``` 
+![](https://i.imgur.com/bvzgyWp.png)
+
+After some struggling, I got it working the way I want. This is the code and the results. Here it is much more clear that the higher numbers so `x > 50` appear more often than the lower numbers `x < 30`.
+
+```java
+int i = 0;
+
+void setup() {
+  size (500,500);
+  background(255);
+}
+
+void draw() {
+  float r1 = random(0,500);
+  float r2 = random(0,500);
+  
+  if (r2 < r1) {
+     fill(1,1);
+     ellipse(r1,r1,5,5);
+     i++;
+     print(i + ", ");
+     
+     if (i == 100) {
+       noLoop();
+     }
+  } else {
+     return;
+  }
+}
+``` 
+
+![](https://i.imgur.com/CHs8mXB.png)
+
+I want to conclude this exercise with a last realization. While looking at the graph I got annoyed thinking that because of some mistake I made, the relation of the results was negative, something in the lines of `y = -a * x`. But silly me didn't realize that in computing, the y-axis is upside down. So the more down you go, the bigger the value of `y` is. So, another good moment. 
+
+### Perlin Noise
+A very important topic, that is going to allow us to give our randomness a organic feel & smoothness. A very big 'if' that Daniel describes about using these methods or features, is knowing when to use them. A little side note that he gave. So now we know what Perlin Noise does, it shouldn't mean we start using it for every simulation model. Moreso, we need to think about when absolute randomness is better, or gaussian or Perlin. 
+
+The way to use Perlin Noise in Processing is like this `float x = noise(t)`. The function `noise()` will **ALWAYS** give a value of `[0, 1]`. But, we can work around this by using the `map()` function, more on that in a later chapter. The thing is, for `noise()` to work, we need to move through a given value. In the example of `float x = noise(t)`, the `t` stands for time. Imagine this plot with random numbers over time. `noise(t)` is going to need to make steps over time to calculate this 'random' number for us. So we need to tell define these steps for it. It sounds very vague untill now, but the graph soon will explain it better. 
+
+![](https://i.imgur.com/5FIJiqw.png)
+
+See the graph plotted in the drawing? Daniel describes the `time` as the steps that are being made. We can see 3 very big steps and at the start of the plot ~5 small ones. As you can maybe see, the 3 big steps give very different results, where the smaller steps give results that are closer to each other. 
