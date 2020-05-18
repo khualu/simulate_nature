@@ -182,3 +182,69 @@ void draw() {
   ellipse(x,y,10,10);
 }
 ```
+
+### PVectors
+So, we're going to start using an object variable `(PVector)` and stop using primitive variables `(float x;)`. The syntax for using PVector is as follows:
+
+```java
+PVector position;
+position = new PVector(100,50);
+```
+
+A good place to check some very needed information on `PVectors` is on the [official Processing website](https://processing.org/reference/PVector.html). As we can see down here, `PVector` uses methods specially for it. This is so that Processing understands whats going on.
+
+![](https://i.imgur.com/KREzVlc.png)
+
+### Exercise 2#
+Grab the bounce ball sketch and remake it, but with PVector. This was the result:
+![](https://i.imgur.com/nNcXkVx.png)
+
+```java
+Ball b;
+
+void setup() {
+ size (600,500);
+ b = new Ball();
+}
+
+void draw() {
+ background(255);
+ b.move();
+ b.bounce();
+ b.display();
+}
+
+class Ball {
+  
+ PVector position;
+ PVector velocity;
+ 
+ Ball() {
+  position = new PVector(width/2,height/2);
+  velocity = new PVector(4, -1.5);
+ }
+  
+ void move() {
+  position.add(velocity); 
+ }
+  
+ void bounce() {
+   //Bounce logic
+  if (( position.x > width) || position.x < 0) {
+    velocity.x = velocity.x * -1;
+  }
+  if (( position.y > height) || position.y < 0) {
+   velocity.y = velocity.y * -1; 
+  }
+   
+ }
+ 
+ void display() {
+  stroke(0);
+  strokeWeight(2);
+  fill(182);
+  ellipse(position.x,position.y,50,50);
+ }
+  
+}
+```
