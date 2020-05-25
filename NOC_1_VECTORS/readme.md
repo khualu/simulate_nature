@@ -10,7 +10,8 @@ This part of the video series will exists of 6 different models/examples that wi
 ## Vectors are the basis for the whole video series
 Daniel describes that vectors will be used throughout the whole series and thus are a very important part to really understand. We will answer the questions "What are vectors?" and "Why should we care about vectors?".
 
-### What is a vector in a 2D space?
+### 1.1 Vectors (in Processing)
+#### What is a vector in a 2D space?
 A vector is represented with an arrow and it has:
 1. Magnitude
 2. Direction
@@ -183,7 +184,7 @@ void draw() {
 }
 ```
 
-### PVectors
+### 1.2 PVectors
 So, we're going to start using an object variable `(PVector)` and stop using primitive variables `(float x;)`. The syntax for using PVector is as follows:
 
 ```java
@@ -248,3 +249,190 @@ class Ball {
   
 }
 ```
+
+### 1.3 Vector Math
+For this video we're going to go through 4 different functions that are available for the `PVector` class:
+* `add()` & `sub()`
+* `mult()` "Scaling" & `div()` 
+* `mag()` "magnitude"
+* `normalize()`
+
+##### `add()`
+This is actually what happens and how it works. Not too much of a hassle. So, they are adding two different vectors which ends up like: `w = v + u`.
+![add() function](https://i.imgur.com/yjNYnas.png)
+
+##### `sub()`
+This is a visualization of how subtracting vectors work. So it's the same magnitude but in the opposite direction. 
+![sub() function](https://i.imgur.com/gDAiDx1.png)
+
+There's more to this. Subtracting vectors is often used to get a new vector that describes the discrepancy between these two points. There is a small processing example here. 
+
+```java
+void setup() {
+ size(500,300); 
+}
+
+void draw(){
+    background(255);
+    strokeWeight(2);
+    stroke(0);
+    noFill();
+    
+    // THIS PUTS THE (0,0) IN THE CENTER OF THE SCREEN
+    translate(width/2, height/2);
+    
+    PVector mouse = new PVector(mouseX,mouseY);
+    PVector center = new PVector(width/2,height/2);
+    
+    //Subtracting vectors to show discrepancy
+    mouse.sub(center);
+    
+    //draw line between new values of Vector.mouse &  Vector.center
+    line(0,0,mouse.x,mouse.y);
+}
+``` 
+![](https://i.imgur.com/uVMZlMw.png)
+
+#### `mult()` AKA "scale"
+Daniel describes here that the way `mult()` is used for these kinds of physics sketches is not to multiply two vectors like `w = v * u`, but more like `w = v * n`. Where `n` is the amount of times for scaling a vector. So grow the vector of shrink it. 
+
+If we take the sketch shown above, this would be the only difference:
+```java
+// Subtracting vectors to show discrepancy
+    mouse.sub(center);
+
+// Now multiplying by 2
+    mouse.mult(2);
+``` 
+
+Now the mouse is halfway the line in the sketch. 
+
+### 1.4 Vector Math II
+##### `mag()` Magnitude (POP POP)
+Vector magnitude = `||v||`
+
+So in short, `PVector` is a Java object. So when we use the object, we just store certain values in this object. Like so:
+```java
+class PVector {
+    float x;
+    float y;
+}
+``` 
+
+So the good thing of using the `PVector` class, is being able to access certain values in the object with built-in functions without having to make mathematical equations ourselves. If we want to know the magnitude of a vector, we could use the pythagoras theorem and calculate it ourselves. It does give the same answer, but we could also just use the `mag()` built-in function and access the value that is stored in the object. 
+
+##### `normalize()` Normalize
+The normalize function grows or shrinks a vector to a specific unit, that being `1`.
+
+### 1.5 Acceleration
+This video describes how to work with acceleration in the physics engine we're creating through all these different videos. Acceleration is 'just' another vector we're using in our sketches. So all the vectors we have now are:
+```java
+PVector position;
+PVector velocity;
+PVector acceleration;
+
+Mover() {
+    position = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0.0,0);
+}
+  
+void update() {
+    velocity.add(acceleration);
+    position.add(velocity);
+}
+``` 
+
+##### Constant acceleration
+With constant acceleration we can just put a number (positive or negative) in the acceleration vector and with how we've build the update function, it will accelerate the displacement over time (just like in real life, yey). But we got to realize that it's adding this acceleration every frame, so 60 times per second if at default. 
+
+With the example shown here, we would accelerate for a total of 60 pixels per second. So if `t=0` then `v=0`. At `t=1`, `v=60`. For `t=2`, then `v=120`. 
+```java
+Mover() {
+    position = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(1,0); // accelerate over the x-axis for 1 pixel per frame
+}
+
+``` 
+
+##### `PVector.random2D()`
+This is a built-in function for the PVector class to create a random value in a vector. We can use this and use it with the ball sketch that we're using. This is the new code.
+```java
+PVector position;
+PVector velocity;
+PVector acceleration;
+
+Mover() {
+    position = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
+}
+  
+void update() {
+    // Using that new function to create random values in the vector acceleration
+    acceleration = PVector.random2D();
+
+    velocity.add(acceleration);
+    position.add(velocity);
+
+    // Limiting the maximum of the values to [-5, 5]
+    // If we don't do this, it gets out of hand really fast and the movements looks unnatural. 
+    velocity.limit(5);
+}
+``` 
+
+##### Exercise 3#
+See how much personality you can give to the moving ball. But, only changing the acceleration value: `acceleration = //CODE HERE`.
+
+I got the perlin noise walking after a while. It was pretty cool, and I feel like everytime I get to understand Processing a bit better aswell. This is one of the hard things and the cool things of working with built-in objects. A lot of stuff doesn't work as you think, but once you get it working it feels very natural. 
+
+```java
+class Mover {
+  PVector position;
+  PVector velocity;
+  PVector acceleration;
+  PVector t_noise;
+ 
+  Mover() {
+    position = new PVector(width/2,height/2);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
+    t_noise = new PVector(0,0);
+  }
+  
+  void update(){
+    // creating perlin noise
+    p += 0.05;
+    pnoise = noise(p);
+    
+    //creating movement
+    acceleration = PVector.random2D();
+    acceleration.mult(pnoise);
+    
+    velocity.add(acceleration);
+    position.add(velocity);
+    
+    velocity.limit(5);
+  }
+  
+  void edges() {
+  if (position.x > width)   position.x = 0;
+  if (position.x < 0)       position.x = width;
+  if (position.y > height)  position.y = 0;
+  if (position.y < 0)       position.y = height;
+  }
+ 
+  void display() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127);
+    ellipse(position.x,position.y,48,48);
+  }
+}
+``` 
+Here you can see the difference. The left one is without perlin noise, the right one is with. I do think the right one moves a little less erratic. 
+![](https://i.imgur.com/7RpJ7hU.gif)
+
+##### Gifs
+So, I found a way to record gifs for this project. But it is a huge time investment for each gif. I need to see If I find a way to do this easier and less time consuming. 
