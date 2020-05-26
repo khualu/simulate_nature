@@ -17,3 +17,11 @@ There will be folders for each series of video in the main series that I get to 
 |   |   |   |
 |   |   |   |
 |   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |

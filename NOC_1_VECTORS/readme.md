@@ -432,7 +432,32 @@ class Mover {
 }
 ``` 
 Here you can see the difference. The left one is without perlin noise, the right one is with. I do think the right one moves a little less erratic. 
-![](https://i.imgur.com/7RpJ7hU.gif)
+![](https://i.imgur.com/NZACJMn.gif)
 
 ##### Gifs
-So, I found a way to record gifs for this project. But it is a huge time investment for each gif. I need to see If I find a way to do this easier and less time consuming. 
+So, I found a way to record gifs for this project. So from now on, no more extra explanation and still frames, but moving ones, ＳＩＣＫ.
+
+### 1.6 Acceleration towards mouse
+Since we already have an engine that accounts for acceleration with velocity and poisition, making the ball move towards the mouse shouldn't be that hard. It looks more or less like this:
+
+```java
+void update() {
+    // Make a vector for the position of the mouse
+    PVector mouse = new PVector(mouseX, mouseY);
+
+    // Subtract the position of the ball to create a vector towards the mouse
+    mouse.sub(position);
+    
+    // We could leave this out, but then the ball would be instantaniously at the mouse
+    // That is no fun
+    mouse.setMag(0.5);
+
+    // Change the vector of acceleration towards the value of vector mouse
+    acceleration = mouse;
+}
+```
+
+And then we get this:
+![](https://i.imgur.com/v7kwrIs.gif)
+
+I didn't account for the mouse not being visible in the gif whic is sad. But I can assure you it is following my mouse. At the end of the gif you can see the ball falling into an orbit around my mouse, which I thought was amazing. 
