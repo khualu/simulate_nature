@@ -144,3 +144,132 @@ class Mover {
 
 And this is the product:
 ![](https://i.imgur.com/2k4bMgq.gif)
+
+### 2.3 Simulating with mass
+What is mass? Mass is the amount of matter of an object. So, we know that `a = F/m` and we can add this to the equation like:
+```java
+void applyForce(PVector force) {
+    // we need to make a new PVector because of how Java works
+    // Java will otherwise change all the other values of `f`
+    PVector f = PVector.div(force,mass);
+    acc.add(f);
+  }
+```
+
+We also changed the amount of ball objects in the sketch. 
+```java
+Mover[] movers;
+
+void setup() {
+  size(640,360);
+  movers = new Mover[5];
+  for (int i = 0; i < movers.length; i++) {
+     movers[i] = new Mover();
+  }
+}
+
+void draw() {
+  background(255);
+  
+  for (Mover m : movers) {
+  
+    PVector grav = new PVector (0, 0.4);
+    // Notice how now the vector gravity is multiplied by mass
+    grav.mult(m.mass);
+    m.applyForce(grav);
+  
+    PVector wind = new PVector (0.2,0);
+    if (mousePressed) {
+    // Here vector wind is divided by mass, because if the object is heavier it needs more windforce to move
+      wind.div(m.mass);
+      m.applyForce(wind); 
+    }
+    // execute all functions
+    m.update();
+    m.edges();
+    m.display();
+  }
+}
+```
+
+This is the new model that we have. As you can see, the smallest objects get impacted by way more by wind. 
+![](https://i.imgur.com/z6hIUI6.gif)
+
+### 2.4 Friction Force
+This video two forces will be discussed. Friction and drag. 
+
+##### Friction
+Friction is a force that forces backwards from the direction of the velocity of an object. As shown here. 
+![](https://i.imgur.com/DF32qOB.png)
+
+To get an idea about how this works Daniel shows the formula for friction, which is:
+//
+![](https://3.bp.blogspot.com/-FWz956Wh29Y/V10WgbjExUI/AAAAAAAAADg/LqpEcN6oRU0zIic-ajM3VMU-kZ37LohjACLcB/s320/frictionequation.png)
+
+To simulate this force Daniel worte it down this way `F = -1 * mu * N * v`. 
+1. We can get the direction from `F = -1 * v`
+   * `PVector friction = velocity.get();`
+   * `friction.normalize();`
+   * `friction.mult(-1);`
+   * We have now the direction of the friction in a PVector
+
+2. We can get the magnitude from `mu * N`
+    * `N = 1` just to make our lives easier (Daniel's words)
+    * Just the friction coefficient's left
+    * We can make up a number for that
+    *  `float c = 0.01`
+    * `friction.mult(c);`
+
+3. `applyForce(friction);`, and we're done. 
+
+Here are the results. As you can see objects with less mass are impacted more by the friction. This makes sense since it will cost more energy to move an object with a greater mass. The way friction is computed right now, it doesn't take into account size of the object or the contact surface, so keep that in mind. 
+
+![](https://i.imgur.com/5Eo1TE1.gif)
+
+```java
+Mover[] movers;
+
+void setup() {
+  size(640,360);
+  movers = new Mover[5];
+  for (int i = 0; i < movers.length; i++) {
+     movers[i] = new Mover();
+  }
+}
+
+void draw() {
+  background(255);
+  
+  for (Mover m : movers) {
+  
+    PVector grav = new PVector (0, 0.4);
+    grav.mult(m.mass);
+    m.applyForce(grav);
+  
+    //PVector wind = new PVector (0.2,0);
+    //wind.div(m.mass);
+    //m.applyForce(wind); 
+    
+    // friction computing
+    PVector friction = m.vel.get();
+    friction.normalize();
+    
+    // friction coefficient
+    float c = -0.05;
+    friction.mult(c);
+    if (mousePressed) {
+      m.applyForce(friction);
+    }
+    // execute all functions
+    m.update();
+    m.edges();
+    m.display();
+  }
+
+  
+  Mover class {
+    // Mover class is still the same
+  }
+}
+
+```
