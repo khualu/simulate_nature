@@ -14,7 +14,7 @@ There will be folders for each series of video in the main series that I get to 
 | 18/05/2020  | 80 minutes  | Vectors NOC: 1.1 Vectors & 1.2 PVector  |
 | 25/05/2020 | 120 minutes  | Vectors NOC: Vector Math I (1.3) & II (1.4) and Acceleration (1.5)  |
 | 26/05/2020  | 105 minutes  | Vector NOC: 1.6 Acceleration towards mouse & Forces NOC 2.1 What is a Force? & 2.2 Applying a Force  |
-|   |   |   |
+| 27/05/2020 | 90 minutes  | Forces NOC: 2.3 Simulating with mass & 2.4 Friction Force |
 |   |   |   |
 |   |   |   |
 |   |   |   |
