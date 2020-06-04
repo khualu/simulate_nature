@@ -468,3 +468,6 @@ I started with Daniel's code again and changed stuff myself to see what results 
 
 ##### What I got it to do
 ![](https://i.imgur.com/fzzBZK5.gif)
+
+### Epilogue
+I just wanted to say that the videos are getting longer and recording gifs and getting proper images is making the whole process of working through a video a bit longer than intended. So, I will try to keep doing it this way, just a little less excessive on the explanations. 

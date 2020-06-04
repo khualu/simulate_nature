@@ -16,7 +16,7 @@ There will be folders for each series of video in the main series that I get to 
 | 26/05/2020  | 105 minutes  | Vector NOC: 1.6 Acceleration towards mouse & Forces NOC 2.1 What is a Force? & 2.2 Applying a Force  |
 | 27/05/2020 | 90 minutes  | Forces NOC: 2.3 Simulating with mass & 2.4 Friction Force |
 | 3/06/2020 | 270 minutes  | Forces NOC: 2.5 Drag Forcce & 2.6 Gravitational Attraction |
-|   |   |   |
+| 4/06/2020 | 210 minutes  | Oscillation NOC: 3.1 Angles and Angular Motion & 3.2 Trigonometry and Polar Coordinates  |
 |   |   |   |
 |   |   |   |
 |   |   |   |
@@ -26,6 +26,7 @@ There will be folders for each series of video in the main series that I get to 
 |   |   |   |
 |   |   |   |
 
-Planning: 
-* 5x per week 133 minuten werken om op 56 uur uit te komen op 26 juni
-* 8,5 dag 5 uur werken
+
+| Total amount in minutes | Total amount in hours  |
+|---|---|
+| 1175 | 19.5 |
