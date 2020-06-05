@@ -204,3 +204,95 @@ This was the end result, looked cool.
 
 ###### `r -= noise(0.2)` & `aAcc = 0.1`, no velocity constrain
 ![](https://i.imgur.com/MbV7OhK.gif)
+
+### 3.3 Simple Harmonic Motion
+Starting this chapter I gave myself the challenge to plot a sinus function on Processing. It was just a small challenge, but I got my results. Although there is something that I still don't know how to do. I wanted to make the frequency lower of the sinusoid, so the waves would take more space over the x-axis. I eventually 'cheated' a way of doing this by scaling only the x-axis in a transformation. 
+
+![](https://i.imgur.com/uwAX4nV.gif)
+
+```java
+float x = 0;
+float y = 0;
+
+void setup() {
+ size(640,360);
+ background(255);
+}
+
+void draw() {
+  x += 0.1;
+  y = sin(x) * 50;
+  pushMatrix();
+  scale(3,1.0);
+  translate(10,180);
+  stroke(0);
+  //strokeWeight(2);
+  line(x,y,x,y);
+  popMatrix();
+}
+```
+
+So, harmonic motion and sinusoidal functions. I think the image below explains some important features of this.
+![](https://www.dummies.com/wp-content/uploads/376143.image2.jpg)
+
+
+Another feature of sinusoidal (cosinus aswell) functions is that their value will never exceed the range of `[-1, 1]`. We can of course manipulate the function so it does, like so `sin(x) * a`, where `a` is going to decide our amplitude.
+
+So the `period` is the time it takes a sinusoidal function to go complete a full cicle. The frequency of it is calculated like so `f = 1 / period`. Notice this is also an `f`. The use of symbols in physics can get a bit messy. 
+
+While watching the video, I noticed that Daniel had used a sinusoidal function to make movement. So instead of actually plotting the function, he used it for movement, which was very interesting. This is the example. 
+
+![](https://i.imgur.com/91H5RVx.gif)
+
+```java
+float amplitude = 300;
+float period = 150;
+
+void setup() {
+ size(640,360);
+}
+
+void draw() {
+ background(255);
+ translate(width/2, height/2);
+ 
+ float x = amplitude *  sin((frameCount/period) * TWO_PI);
+ fill(127);
+ stroke(0);
+ line(0,0,x,0);
+ ellipse(x,0,36,36);
+}
+```
+
+##### Exercise
+I tried to remake the sinuswave that Daniel showed in the example. The results are pretty nice.
+![](https://i.imgur.com/sr7ueUH.gif)
+
+```java
+float startAngle = 0;
+float amplitude = 100;
+float angleVel = 0.23;
+
+void setup() {
+ size(600,300); 
+}
+
+void draw() {
+  background(0);
+  startAngle += 0.015;
+  float angle = startAngle;
+  
+  for( int x = 0; x < width; x = x + 30)
+  {
+    float y = amplitude * sin(angle);
+    pushMatrix();
+    translate(0,height/2);
+    ellipse(x,y,36,36);
+    fill(128,128,128,90);
+    stroke(90);
+    popMatrix();
+  angle += angleVel;
+  }
+  angle += 0.05;
+}
+```
