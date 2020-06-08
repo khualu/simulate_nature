@@ -18,7 +18,7 @@ There will be folders for each series of video in the main series that I get to 
 | 3/06/2020 | 270 minutes  | Forces NOC: 2.5 Drag Forcce & 2.6 Gravitational Attraction |
 | 4/06/2020 | 210 minutes  | Oscillation NOC: 3.1 Angles and Angular Motion & 3.2 Trigonometry and Polar Coordinates  |
 | 5/06/2020  | 120 minutes | Oscillation NOC: 3.3 Simple Harmonic Motion  |
-|   |   |   |
+| 8/06/2020  | 90 minutes  | Oscillation NOC: 3.4 Pendulum Simulation  |
 |   |   |   |
 |   |   |   |
 |   |   |   |

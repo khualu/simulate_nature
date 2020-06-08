@@ -296,3 +296,65 @@ void draw() {
   angle += 0.05;
 }
 ```
+
+### 3.4 Pendulum Simulations
+With this chapter we're going to use all the knowledge we have from the PVector series untill now. Daniel will explain different steps in how to make a pendulum move. 
+
+##### Draw a pendulum at rest
+![](https://i.imgur.com/VrpvlRz.png)
+```java
+PVector origin;
+PVector bob;
+float len;
+
+void setup() {
+   size(640,360);
+   len = 180;
+   origin = new PVector(width/2,0);
+   bob = new PVector(width/2,len);
+}
+
+
+void draw() {
+   background(255);
+   line(origin.x,origin.y,bob.x,bob.y);
+   ellipse(bob.x,bob.y,32,32);
+}
+```
+
+##### Draw the pendulum at an angle
+To draw the new position of the bob (this is actually the name for the head of the pendulum?), we need to know the values for `y` & `x` like they're shown in the image. The length of the pendulum chord is our `len` variable and will be constant. 
+
+So we just need to formulas for this. 
+* `y = len * sin(θ)`
+* `x = len * cos(θ)`
+![](https://i.imgur.com/IiLdgXi.png)
+
+We translate this formula to something we can use in processing and we have a pendulum in a different position using polar coordinates.
+
+```java
+float angle = PI/4;
+(...)
+
+void draw() {
+  bob.x = origin.x + len * sin(angle);
+  bob.y = origin.y + len * cos(angle);
+   
+  line(origin.x,origin.y,bob.x,bob.y);
+  ellipse(bob.x,bob.y,32,32);
+}
+```
+
+![](https://i.imgur.com/eJ7a2Oz.png)
+
+##### How to calculte the pendulum force
+
+![](https://i.imgur.com/qUpteJX.png)
+
+`F = Fg * sin(θ)`
+
+But to find out the force of gravity we need to think of some constant or a way to simulate this. Remember we did this way earlier. We could make a fomula that looks like this:
+`Fp = G * mass * sin(θ)`
+
+##### Exercise 
+Make something crazy with this.
