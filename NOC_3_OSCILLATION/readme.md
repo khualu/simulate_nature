@@ -358,3 +358,12 @@ But to find out the force of gravity we need to think of some constant or a way 
 
 ##### Exercise 
 Make something crazy with this.
+
+### 3.5 Springs
+This video is exciting in the way that we haven't done anything like this yet. But, we can combine all the stuff we've done before to work together with the spring physics. The most important question for this video is, how do we simulate a spring force?
+
+##### Hooke's law
+![](https://scx1.b-cdn.net/csz/news/800/2015/54e1ebda060dc.jpg)
+* `k` is the spring constant. It describes how jumpy/elastic a spring is
+* `x` is the distance that the spring is either stretched or contracted from its rest point
+

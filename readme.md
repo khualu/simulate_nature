@@ -1,4 +1,4 @@
-# Nature of Coding
+/# Nature of Coding
 This repo is made for two extra credits for the Hogeschool van Amsterdam. I get to choose a topic for which I get to spend 28 hours on 1 credit. I choose to follow the video series of [The Coding Train](https://www.youtube.com/user/shiffman/playlists?view=50&sort=dd&shelf_id=6), which explains how to simulate different processes of nature in the programme [Processing](https://processing.org/).
 
 ## Project structure
@@ -19,7 +19,7 @@ There will be folders for each series of video in the main series that I get to 
 | 4/06/2020 | 210 minutes  | Oscillation NOC: 3.1 Angles and Angular Motion & 3.2 Trigonometry and Polar Coordinates  |
 | 5/06/2020  | 120 minutes | Oscillation NOC: 3.3 Simple Harmonic Motion  |
 | 8/06/2020  | 90 minutes  | Oscillation NOC: 3.4 Pendulum Simulation  |
-|   |   |   |
+| 9/06/2020  | 90 minutes  | Oscillation NOC: 3.5 Springs & Particle Systems NOC: 4.1 Patricle Systems  |
 |   |   |   |
 |   |   |   |
 |   |   |   |
@@ -29,4 +29,4 @@ There will be folders for each series of video in the main series that I get to 
 
 | Total amount in minutes | Total amount in hours  |
 |---|---|
-| 1175 | 19.5 |
+| 1355 | 22.5 |
