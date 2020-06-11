@@ -330,3 +330,177 @@ class ParticleSystem {
   }
 }
 ``` 
+
+### 4.5 Introduction to Inheritance part I
+> Inheritance is an important pillar of OOP(Object Oriented Programming). It is the mechanism in java by which one class is allow to inherit the features(fields and methods) of another class.
+
+```java
+class Mammal {
+  void eat(){
+    print("Omnomnom");
+  }
+
+  void sleep(){
+    print("Zzzzzzz");
+  }
+}
+
+class kitten extends mammal {
+  // 1# inherits all the code from class mamal
+
+  // 2# add new data
+  int numWhiskers;
+
+  // 3# add new functions specific to kitten class
+  void purr(){}
+
+  // 4# override functions
+  void eat() {
+    // new way of eating function, different from the mammal class
+  }
+
+  // 5# "super" override with new functionality, but also keep old one
+  void sleep () {
+    print("purrrrr"); // new behavior
+    super.sleep();    // BUT also do the old one
+  }
+}
+``` 
+### 4.6 Introduction to Inheritance part II
+So in our examples with particles and the particle system, the use of inheritance will look like so:
+```java
+class Particle {
+  PVector position;
+  PVector velocity;
+  PVector acceleration;
+  float lifespan;
+
+  Particle(PVector l) {
+    acceleration = new PVector(0,0.05);
+    velocity = new PVector(random(-1,1),random(-2,0));
+    position = l.get();
+    lifespan = 255.0;
+  }
+
+  void run() {
+    update();
+    display();
+  }
+
+  // Method to update position
+  void update() {
+    velocity.add(acceleration);
+    position.add(velocity);
+    lifespan -= 2.0;
+  }
+
+  // Method to display
+  void display() {
+    stroke(0,lifespan);
+    strokeWeight(2);
+    fill(127,lifespan);
+    ellipse(position.x,position.y,12,12);
+  }
+  
+  // Is the particle still useful?
+  boolean isDead() {
+    if (lifespan < 0.0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class ReqSquareParticle extends Particle {
+  
+  ReqSquareParticle (PVector l) {
+   super(l); 
+  }
+  
+  void display(){
+    fill(255,100,0);
+    stroke(0);
+    rectMode(CENTER);
+    rect(position.x,position.y,10,10);
+  } 
+}
+``` 
+
+##### Exercise
+As an exercise I tried myself to make a different sub-class and adding angular acceleration to this one. It was harder than I expected. And I will show you here why.
+![](https://i.imgur.com/Lij4ATm.gif)
+```java
+class ReqSquareParticle extends Particle {
+  
+  float a = 0.0;
+  float aVel = 0.0;
+  float aAcc = 0.0;
+ 
+  ReqSquareParticle (PVector l) {
+   super(l); 
+  }
+  
+  void update() {
+    velocity.add(acceleration);
+    position.add(velocity);
+    lifespan -= 2.0;
+    
+    a += aVel;
+    aVel += aAcc;
+    aAcc += velocity.x/25;
+    constrain(aAcc,-0.001,0.001);
+  }
+  
+  void display(){
+    fill(255,100,0);
+    stroke(0);
+    rectMode(CENTER);
+    rect(position.x,position.y,10,10);
+    rotate(0.01);
+  } 
+}
+``` 
+
+In the end I got it to work. I messed up the locations of the translation & push/pop Matrix.
+![](https://i.imgur.com/XTUp6BG.gif)
+
+```java
+class Particle {
+  // same
+}
+
+class ReqSquareParticle extends Particle {
+  
+  float a = 0.0;
+  float aVel = 0.0;
+  float aAcc = 0.0;
+ 
+  ReqSquareParticle (PVector l) {
+   super(l); 
+  }
+  
+  void update() {
+    velocity.add(acceleration);
+    position.add(velocity);
+    lifespan -= 2.0;
+    
+    a += aVel;
+    aVel += aAcc;
+    aAcc += lifespan/(lifespan*lifespan);   // as the lifespan decreases, bigger angular acceleration
+  }
+  
+  void display(){
+    fill(255,100,0,100);
+    stroke(0);
+    pushMatrix();
+    translate(position.x,position.y);
+    rotate(radians(a));
+    rectMode(CENTER);
+    rect(0,0,16,16);
+    popMatrix();
+  } 
+}
+``` 
+
+### 4.7 Introduction to Polymorphism

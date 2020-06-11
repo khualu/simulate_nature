@@ -21,7 +21,7 @@ There will be folders for each series of video in the main series that I get to 
 | 8/06/2020  | 90 minutes  | Oscillation NOC: 3.4 Pendulum Simulation  |
 | 9/06/2020  | 90 minutes  | Oscillation NOC: 3.5 Springs & Particle Systems NOC: 4.1 Patricle Systems  |
 | 10/06/2020  |  297 minutes | Particle Systems NOC: 4.1 Particle Systems (REWATCH), 4.2 ArrayLists in Processing, 4.3 Deleting Objects from ArrayList & 4.4 Particle System Class |
-|   |   |   |
+| 11/06/2020  | 185 minutes | Particle Systems NOC: 4.4 Particle System Class (REWATCH), 4.5 Introduction to Inheritance part I & 4.6 Introduction to Inheritance part II   |
 |   |   |   |
 |   |   |   |
 |   |   |   |
@@ -29,4 +29,4 @@ There will be folders for each series of video in the main series that I get to 
 
 | Total amount in minutes | Total amount in hours  |
 |---|---|
-| 1782 | 29.7 |
+| 1967 | 32.7 |
