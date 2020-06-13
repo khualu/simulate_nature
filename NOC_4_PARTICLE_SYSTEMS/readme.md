@@ -504,3 +504,170 @@ class ReqSquareParticle extends Particle {
 ``` 
 
 ### 4.7 Introduction to Polymorphism
+Polymorphism is a big pilar in object oriented programming aswell. It allows for us to create object in the form of other objects. This sounds weird, but check to this. 
+
+```java
+class Animal {
+  // Super class
+}
+
+// 3 sub classes
+class Dog extends Animal {}
+class Cat extends Animal {}
+class Turtle extends Animal {}
+
+// New array Kingdom with animals
+Animal[] Kingdom = new Animal[1000];
+
+// We can start with a constructor for Dog
+Dog rover = new Dog();
+
+// We can also just put dog into the array of animal
+Animal spot = new Dog();
+
+// Or into Kingdom
+Kingdom[0] = new Dog();
+Kingdom[1] = new Cat();
+```
+
+The interesting thing is that while the dog objects are in `Kingdom[]`, you can still approach them in the code in a non-select way. We can look through all the different animals and make callbacks in a non-select way. We dont have to say `if (a = Dog) then a.sleep()`.
+```java
+for (Animal a : Kingdom) {
+  a.sleep();
+  a.eat();
+}
+```
+
+Here's an example of polymorphism in our inheritance exercise:
+```java
+class ParticleSystem {
+  ArrayList<Particle> particles;
+  PVector origin;
+
+  ParticleSystem(PVector position) {
+    origin = position.get();
+    particles = new ArrayList<Particle>();
+  }
+
+  void addParticle() {
+    float r = random(1);
+    if (r < 0.4) {
+      particles.add(new ReqSquareParticle(origin)); // 40% chance for square particles
+    } else {
+      particles.add(new Particle(origin));  
+    }
+  }
+
+  // now when we loop through it, we don't have to explicitly call for 'ReqSquareParticle' or 'Particle'
+  void run() {
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
+      p.run();
+      if (p.isDead()) {
+        particles.remove(i);
+      }
+    }
+  }
+}
+```
+
+### Exercise
+Make a lot of different particles that inherit the `Particle` class and make some crazy confetti with it. 
+
+I made some extra classes to experience how it works. This is the result.
+![](https://i.imgur.com/gco0Bsk.gif)
+
+##### Discussion
+I don't fully understand how to make this usable, or think of a use case for this yet. It will come over time, for sure. But what I really don't get is why some particles seem to inherit certain properties from each other. The `StarParticle()` change color aswell, while I didn't put this in their code. 
+
+```java
+// particles in different colors
+class ColorParticle extends Particle {
+    ColorParticle (PVector l) {
+     super(l); 
+  }
+  
+  void display() {
+   fill(random(100,255),random(100,255),random(100,255));
+   ellipse(position.x,position.y,20,20);
+   stroke(0);
+  }
+}
+
+// meant to change alpha so it looks like they 'bleep'
+class BleepParticle extends Particle {
+   BleepParticle (PVector l) {
+     super(l); 
+  }
+  void display(){
+    fill(255,0,0,random(255));
+    stroke(0);
+    ellipse(position.x,position.y,16,16);
+  } 
+}
+
+// star particles
+class StarParticle extends Particle {
+   StarParticle (PVector l) {
+      super(l); 
+   }
+   
+   void display () {
+    star(position.x, position.y, 5, 30, 3);
+    fill(127);
+   }
+   
+  // https://processing.org/examples/star.html
+  void star(float x, float y, float radius1, float radius2, int npoints) {
+    float angle = TWO_PI / npoints;
+    float halfAngle = angle/2.0;
+    beginShape();
+    for (float a = 0; a < TWO_PI; a += angle) {
+      float sx = x + cos(a) * radius2;
+      float sy = y + sin(a) * radius2;
+      vertex(sx, sy);
+      sx = x + cos(a+halfAngle) * radius1;
+      sy = y + sin(a+halfAngle) * radius1;
+      vertex(sx, sy);
+    }
+    endShape(CLOSE);
+  } 
+}
+
+class ParticleSystem {
+  ArrayList<Particle> particles;
+  PVector origin;
+
+  ParticleSystem(PVector position) {
+    origin = position.get();
+    particles = new ArrayList<Particle>();
+  }
+
+  // CHANGES TO PARTICLESYSTEM
+  void addParticle() {
+    float r = random(1);
+    if (r < 0.20) {
+      particles.add(new ReqSquareParticle(origin));
+    } else if ( r < 0.40) {
+      particles.add(new Particle(origin));  
+    } else if (r < 0.60) {
+      particles.add(new BleepParticle(origin));
+    } else if (r < 0.80) {
+      particles.add(new ColorParticle(origin));
+    } else {
+      particles.add(new StarParticle(origin));
+    }
+  }
+
+  void run() {
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
+      p.run();
+      if (p.isDead()) {
+        particles.remove(i);
+      }
+    }
+  }
+}
+```
+
