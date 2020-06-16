@@ -671,3 +671,81 @@ class ParticleSystem {
 }
 ```
 
+### 4.8 Applying Force to a Particle System
+In the past few examples, all our particles have a constant acceleration. There's no `applyForce()`  method written in them. How are we going to add this? 
+
+We're trying to add the same method we used two chapters ago, but then for the whole system. This is going to look like this: 
+
+```java
+// This is in the main Processing Sketch
+// Apply gravity force to all Particles
+PVector gravity = new PVector(0,0.1);
+ps.applyForce(gravity);
+
+class Particle {
+  // Exactly the same function we used before
+  void applyForce(PVector force) {
+    acceleration.add(force);
+  }
+
+  void update() {
+    velocity.add(acceleration);
+    location.add(velocity);
+    acceleration.mult(0);       // Very important, we want to make sure acceleration doesn't accumulate over time
+    lifespan -= 2.0;
+  }
+}
+
+class ParticleSystem {
+  // A function to apply a force to all Particles
+  void applyForce(PVector f) {
+    for (Particle p: particles) { // for each particle in particles, use applyForce() method
+      p.applyForce(f);
+    }
+  }
+}
+``` 
+
+### 4.9 Using Image Texture with Particles
+The video series clearly don't have an eye for the graphic design part of the results. We only make gray ellipses on a single color background and that's it. But, in Processing it is possible to use images to render textures. 
+
+For this we need to use the method `PImage`. One very important thing is to preload the image into the particle system. This way, the image doesn't get loaded for every particle we draw. 
+
+```java
+PImage img = loadIMage("texture.png");
+ps = new ParticleSystem(0, new PVector(width/2, height-75), img);
+
+class Particle {
+  
+  PVector pos;
+  PVector vel;
+  PVector acc;
+  float lifespan;
+  PImage img;
+  
+  Particle(PVector l, PImage img_) {
+    // all other properties
+    img = img_;
+  }
+
+  void render() {
+    imageMode(CENTER);
+    tint(255, lifespan);
+    image(img, pos.x, pos.y, 32, 32);
+  }
+}
+``` 
+
+#### Rendering textures and efficiency
+In the video Daniel explains that when you're doing this kind of more visual heavy work, the normal engine from Processing has a hard time rendering everything smoothly. Processing has different rendering engines that can greatly improve rendering in certain situations.
+
+For rendering textures from images we can use the `P2D` engine. 
+```java
+void setup() {
+  size(640,360,P2D);
+};
+```
+
+For more information [check here](https://processing.org/tutorials/p3d/).
+
+![](https://i.imgur.com/psCg4wo.gif)
