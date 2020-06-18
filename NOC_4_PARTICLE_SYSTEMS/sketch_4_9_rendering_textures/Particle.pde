@@ -1,53 +1,57 @@
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
+
 class Particle {
-  PVector position;
-  PVector velocity;
-  PVector acceleration;
+  PVector pos;
+  PVector vel;
+  PVector acc;
   float lifespan;
   PImage img;
-  
-  float mass = 1; // Let's do something better here!
 
-  Particle(PVector l, PImage img_) {
-    acceleration = new PVector(0,0);
-    velocity = new PVector(random(-1,1),random(-2,0));
-    position = l.get();
-    lifespan = 255.0;
+  Particle(PVector l,PImage img_) {
+    acc = new PVector(0,0);
+    float vx = randomGaussian()*0.5;
+    float vy = randomGaussian()*0.5 - 1.0;
+    vel = new PVector(vx,vy);
+    pos = l.get();
+    lifespan = 100.0;
     img = img_;
   }
 
   void run() {
     update();
-    display();
+    render();
   }
-
-  void applyForce(PVector force) {
-    PVector f = force.get();
-    f.div(mass);   
-    acceleration.add(f);
-  }
+  
+  // Method to apply a force vector to the Particle object
+  // Note we are ignoring "mass" here
+  void applyForce(PVector f) {
+    acc.add(f);
+  }  
 
   // Method to update position
   void update() {
-    velocity.add(acceleration);
-    position.add(velocity);
-    acceleration.mult(0);
-    lifespan -= 2.0;
+    vel.add(acc);
+    pos.add(vel);
+    lifespan -= 2.5;
+    acc.mult(0); // clear Acceleration
   }
 
   // Method to display
-  void display() {
+  void render() {
     imageMode(CENTER);
-    tint(255, lifespan);
-    image(img, position.x, position.y);
-    //stroke(0,lifespan);
-    //strokeWeight(2);
-    //fill(127,lifespan);
-    //ellipse(position.x,position.y,12,12);
+    tint(255,lifespan);
+    image(img,pos.x,pos.y,100,100);
+    // Drawing a circle instead
+    // fill(255,lifespan);
+    // noStroke();
+    // ellipse(pos.x,pos.y,img.width,img.height);
   }
 
   // Is the particle still useful?
   boolean isDead() {
-    if (lifespan < 0.0) {
+    if (lifespan <= 0.0) {
       return true;
     } else {
       return false;

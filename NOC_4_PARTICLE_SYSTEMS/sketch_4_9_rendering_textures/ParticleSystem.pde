@@ -1,23 +1,24 @@
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
+
+// Smoke Particle System
+
+// A class to describe a group of Particles
+// An ArrayList is used to manage the list of Particles 
+
 class ParticleSystem {
-  ArrayList<Particle> particles;
-  PVector origin;
-  PVector img;
 
-  ParticleSystem(PVector position, PImage img_) {
-    origin = position.get();
-    particles = new ArrayList<Particle>();
+  ArrayList<Particle> particles;    // An arraylist for all the particles
+  PVector origin;        // An origin point for where particles are birthed
+  PImage img;
+
+  ParticleSystem(int num, PVector v, PImage img_) {
+    particles = new ArrayList<Particle>();              // Initialize the arraylist
+    origin = v.get();                        // Store the origin point
     img = img_;
-  }
-
-  
-  void addParticle() {
-    particles.add(new Particle(origin, img));
-  }
-
-  // A function to apply a force to all Particles
-  void applyForce(PVector f) {
-    for (Particle p: particles) {
-      p.applyForce(f);
+    for (int i = 0; i < num; i++) {
+      particles.add(new Particle(origin, img));    // Add "num" amount of particles to the arraylist
     }
   }
 
@@ -30,4 +31,17 @@ class ParticleSystem {
       }
     }
   }
+
+  // Method to add a force vector to all particles currently in the system
+  void applyForce(PVector dir) {
+    // Enhanced loop!!!
+    for (Particle p: particles) {
+      p.applyForce(dir);
+    }
+  }  
+
+  void addParticle() {
+    particles.add(new Particle(origin, img));
+  }
+
 }
