@@ -4,8 +4,8 @@ class Box {
    float w,h;
    
    Box(float x, float y) {
-    w = 16;
-    h = 16;
+    w = random(4,20);
+    h = random(4,20);
    
    
    // 1. Define the body
@@ -33,6 +33,20 @@ class Box {
    
    // 5. Put it together
    body.createFixture(fd);
+ }
+   
+   // Kill function for bodies outside of window
+   void killBody(){
+    box2d.destroyBody(body);
+   }
+   
+   boolean done() {
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    if (pos.y > height) {
+     killBody();
+     return true;
+    }
+    return false;
    }
    
    void display() {

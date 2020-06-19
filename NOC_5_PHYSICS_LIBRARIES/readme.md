@@ -200,7 +200,7 @@ We put together a list of what we need to do to create this body object from Box
 3. **Ask Box2D "where is the body?"**
     * This will happen in `display()`
 
-##### Step 1 || Creating the world
+##### Creating the world
 ```java
 import shiffman.box2d.*;
 
@@ -220,7 +220,8 @@ void setup() {
 void draw() {
   background(255);
   
-  // This makes sure that the engines runs how it should, so step by step calculations
+  // This makes sure that the engines runs how it should, 
+  // This is because it runs on real time units
   box2d.step();
   
   
@@ -233,4 +234,86 @@ void draw() {
 }
 ```
 
-##### Step 2 || Creating the body
+##### Step 1, 2, 3, 4, 5 || 
+```java
+class Box {
+   // 1. Define the body
+   BodyDef bd = new BodyDef();
+   bd.type = BodyType.DYNAMIC;                      // Our body needs to experience physics, so it's dynamic
+   bd.position.set(box2d.coordPixelsToWorld(x,y));  // change coordinates to World coordinates
+   body = box2d.createBody(bd);
+
+   // 2. Create body
+   body = box2d.createBody(bd);
+
+    // 3. Create a Shape
+   PolygonShape ps = new PolygonShape();
+   float box2Dw = box2d.scalarPixelsToWorld(w/2); 
+   float box2Dh = box2d.scalarPixelsToWorld(h/2); 
+   ps.setAsBox(box2Dw, box2Dh);
+
+     // 4. Create a fixture
+   FixtureDef fd = new FixtureDef();
+   fd.shape = ps;
+   // Parameters that affect physics
+   fd.density = 1;
+   fd.friction = 0.3;
+   fd.restitution = 0.5;
+   
+   // 5. Put it together
+   body.createFixture(fd);
+   }
+   
+   void display() {
+     // Get the location of the body from Box2D and translate to pixel coordinates
+     Vec2 pos = box2d.getBodyPixelCoord(body);
+     float a = body.getAngle();
+     
+     pushMatrix();
+     translate(pos.x,pos.y);
+     rotate(-a);
+     fill(127);
+     strokeWeight(2);
+     rectMode(CENTER);
+     rect(0,0,w,h);
+     popMatrix();
+   }
+}
+```
+##### Result
+I honestly spend like 1.5 hours trying to make it work and Processing giving me errors I couldn't use, just to find out I was typing all the `Box2D` stuff outside of the `class Box{}`. So yeah, lesson learned. I notice that I'm not used to not having color coded syntax in Processing. I always work in Visual Studio Code, where I even choose my own theme for the color coding.
+![](https://i.imgur.com/fA9jhfE.gif)
+
+### 5.6 Static Bodies & Chain Shapes in Box2D
+We're going to briefly describe how each of this shapes work.
+
+##### Static Bodies
+The Static bodies are very easy to make. If you remember the steps we needed to make the box body work in the last video, we just need to change one thing. Instead of a `DYNAMIC` body, we now need a `STATIC` body when we define the body. 
+
+```java
+BodyDef bd = new BodyDef();
+bd.type = BodyType.STATIC; 
+```
+
+##### Chain Shapes
+The chain shapes do have a different method to them. But in fact we're just changing the kind of shape it is. It also has a `STATIC` body, but instead of a `PolygonShape ps = new PolygonShape();`, we now will use `ChainShape cs = new ChainShape();`.
+```java
+class Surface {
+ChainShape cs = new ChainShape();
+Vec2[] vertices = new Vec2[3];
+vertices[0] = box2d.coordPixelsToWorld(x0,y0);
+vertices[1] = box2d.coordPixelsToWorld(x1,y1);
+vertices[2] = box2d.coordPixelsToWorld(x2,y2);
+
+chain.createChain(vertices, vertices.length);
+}
+```
+
+### Exercise 1 || Get static shapes to work
+This took a very long time actually, so I'm wondering how long it's going to take me to get the chain shape working. But in the end we got it. I got stuck wondering why the static shapes were in the world, but they had no collision. Apparently I did everything correctly, I just forgot to create a fixture to get the body and shape together. 
+
+![](https://i.imgur.com/izMM8qU.gif)
+
+```java
+
+```

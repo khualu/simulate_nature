@@ -23,10 +23,10 @@ There will be folders for each series of video in the main series that I get to 
 | 10/06/2020  |  297 minutes | Particle Systems NOC: 4.1 Particle Systems (REWATCH), 4.2 ArrayLists in Processing, 4.3 Deleting Objects from ArrayList & 4.4 Particle System Class |
 | 11/06/2020  | 185 minutes | Particle Systems NOC: 4.4 Particle System Class (REWATCH), 4.5 Introduction to Inheritance part I & 4.6 Introduction to Inheritance part II   |
 | 16/06/2020  | 211 minutes  | Particle Systems NOC: 4.7 Introduction to Polymorphism, 4.8 Applying Forces to a Particle System & 4.9 Using Image Textures with Particles  |
-|   |   |   |
-|   |   |   |
+| 18/06/2020  | 303 minutes  | Physics Libraries NOC: 5.0.a Introduction to Physics Engines part I, 5.0.b Introduction to Physics Engines part II, 5.1 Introduction to Box2D, 5.2 What makes up a Box2D world, 5.3 Box2d Coordinates and Vectors, 5.4 Adding Box2D to Processing Sketch part I & 5.5 Adding Box2D to Processing Sketch part II (NOT FULLY DONE) |
+| 19/06/2020  | 245 minutes  | Physics Libraries NOC: 5.5 Adding Box2D to Processing Sketch part II (REWATCH) & 5.6 Static Bodies and Chain Shapes in Box2D|
 
 
 | Total amount in minutes | Total amount in hours  |
 |---|---|
-| 2178 | 36.3 |
+| 2726 | 45.4 |
