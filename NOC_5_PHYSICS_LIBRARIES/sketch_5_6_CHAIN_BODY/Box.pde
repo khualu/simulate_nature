@@ -4,8 +4,8 @@ class Box {
    float w,h;
    
    Box(float x, float y) {
-    w = random(4,20);
-    h = random(4,20);
+    w = random(4,40);
+    h = random(4,40);
    
    
    // 1. Define the body

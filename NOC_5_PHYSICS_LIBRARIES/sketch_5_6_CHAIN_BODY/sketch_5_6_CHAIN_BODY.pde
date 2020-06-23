@@ -20,9 +20,10 @@ void setup() {
 }
 
 void draw() {
-  background(255);
-  
   box2d.step();
+  
+  background(255);
+  surface.display();
   
   Box p = new Box(width/2,50); 
   boxes.add(p);

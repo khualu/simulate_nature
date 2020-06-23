@@ -1,14 +1,16 @@
 class Surface {
+  Vec2[] vcs = new Vec2[6];
+  Vec2[] vcsPixels = new Vec2[vcs.length];
   
   Surface() {
+  vcs[0] = box2d.coordPixelsToWorld(0,height-50);
+  vcs[1] = box2d.coordPixelsToWorld(width/5,height/2);
+  vcs[2] = box2d.coordPixelsToWorld(width/5*2,height-50);
+  vcs[3] = box2d.coordPixelsToWorld(width/5*3,height-50);
+  vcs[4] = box2d.coordPixelsToWorld(width/5*4,height/2);
+  vcs[5] = box2d.coordPixelsToWorld(width/5*5,height-50);
+  
   ChainShape cs = new ChainShape();
-  
-  Vec2[] vcs = new Vec2[3];
-  
-  vcs[0] = box2d.coordPixelsToWorld(50,height/4);
-  vcs[1] = box2d.coordPixelsToWorld(350,height/2);
-  vcs[2] = box2d.coordPixelsToWorld(600,height/5);
-  
   cs.createChain(vcs, vcs.length);
   
   // Edge of chain is now a body
@@ -19,16 +21,18 @@ class Surface {
   }
   
   void display() {
+  for (int t = 0; t < vcs.length; t++){
+     vcsPixels[t] = box2d.coordWorldToPixels(vcs[t]); 
+  }
    strokeWeight(1);
    stroke(0);
-   fill(0);
    beginShape();
-   for (Vec2 v: surface) {
-    vertex(v.x, v.y); 
+   for (int l = 0; l < vcs.length; l++) {
+     vertex(vcsPixels[l].x, vcsPixels[l].y);
    }
-   
-   vertex(width,height);
-   vertex(0,height);
+   vertex(width, height);
+   vertex(0, height);
+   fill(0);
    endShape(CLOSE);
   }
 }
